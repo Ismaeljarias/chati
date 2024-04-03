@@ -30,15 +30,15 @@ export const TextMessageBox = ({
     >
       <div className="flex-grow">
         <div className="relative w-full">
+          <label className="hidden" htmlFor="message">
+            Message
+          </label>
           <input
             type="text"
             autoFocus
             name="message"
             className="flex w-full border rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10"
             placeholder={placeholder}
-            autoComplete={disableCorrections ? "on" : "off"}
-            autoCorrect={disableCorrections ? "on" : "off"}
-            spellCheck={disableCorrections ? "true" : "false"}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
