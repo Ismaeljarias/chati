@@ -1,8 +1,8 @@
 "use client";
 
-import { UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { deleteCookie } from "cookies-next";
 
 interface Props {
   icon: React.ReactNode;
@@ -11,11 +11,16 @@ interface Props {
 }
 
 export const SidebarMenuItem = ({ icon, path, title }: Props) => {
+  const router = useRouter();
   const pathName = usePathname();
-  const { user } = useUser();
+
+  const clearCookie = () => {
+    deleteCookie("chat");
+    router.refresh();
+  };
 
   return (
-    <div className="flex flex-col justify-between h-full">
+    <>
       <Link
         href={path}
         className={
@@ -30,24 +35,13 @@ export const SidebarMenuItem = ({ icon, path, title }: Props) => {
         </div>
       </Link>
 
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-2">
-          <UserButton
-            afterSignOutUrl="/"
-            appearance={{
-              elements: {
-                avatarBox: "h-10 w-10",
-              },
-              variables: {
-                colorPrimary: "#ff7000",
-              },
-            }}
-          />
-          <span className="text-xs">
-            {user?.primaryEmailAddress?.emailAddress}
-          </span>
-        </div>
-      </div>
-    </div>
+      <button
+        onClick={clearCookie}
+        className="flex items-center bg-gray-800 rounded-md transition-colors p-2"
+      >
+        <div className="flex items-center justify-center w-10 h-10">{icon}</div>
+        <span className="text-white text-lg font-semibold">New chat</span>
+      </button>
+    </>
   );
 };

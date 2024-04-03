@@ -23,7 +23,6 @@ export const TextMessageBox = ({
     onSendMessage(message);
     setMessage("");
   };
-
   return (
     <form
       onSubmit={handleSendMessage}

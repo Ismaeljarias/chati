@@ -1,7 +1,8 @@
 import { SidebarMenuItem } from "@/components";
 import { IoCalendarOutline } from "react-icons/io5";
-import { auth } from "@clerk/nextjs";
+import { UserButton, auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { currentUser } from "@clerk/nextjs";
 
 const menuItems = [
   {
@@ -11,12 +12,13 @@ const menuItems = [
   },
 ];
 
-export default function ChatLayout({
+export default async function ChatLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const { userId } = auth();
+  const user = await currentUser();
 
   if (!userId) redirect("/sign-in");
 
@@ -30,9 +32,32 @@ export default function ChatLayout({
 
         <div className="border-gray-700 border my-3" />
 
-        {menuItems.map((option) => (
-          <SidebarMenuItem key={option.path} {...option} />
-        ))}
+        <div className="flex flex-col justify-between h-full">
+          <div className="flex flex-col gap-4">
+            {menuItems.map((option) => (
+              <SidebarMenuItem key={option.path} {...option} />
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={{
+                  elements: {
+                    avatarBox: "h-10 w-10",
+                  },
+                  variables: {
+                    colorPrimary: "#ff7000",
+                  },
+                }}
+              />
+              <span className="text-xs">
+                {user?.emailAddresses[0].emailAddress}
+              </span>
+            </div>
+          </div>
+        </div>
       </nav>
 
       <section className="mx-3 sm:mx-20 flex flex-col w-full h-[calc(100vh-50px)]  bg-white bg-opacity-10 p-5 rounded-3xl">
