@@ -1,5 +1,7 @@
 import { SidebarMenuItem } from "@/components";
 import { IoCalendarOutline } from "react-icons/io5";
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 const menuItems = [
   {
@@ -14,6 +16,10 @@ export default function ChatLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { userId } = auth();
+
+  if (!userId) redirect("/sign-in");
+
   return (
     <main className="flex flex-row mt-7">
       <nav className="hidden sm:flex flex-col ml-5 w-[370px] min-h-[calc(100vh-3.0rem)] bg-white bg-opacity-10 p-5 rounded-3xl">

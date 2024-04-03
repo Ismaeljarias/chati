@@ -5,10 +5,6 @@ import { Message, MyMessage, TextMessageBox, TypingLoader } from "@/components";
 
 const messages = [
   {
-    text: "Hola, I'm goku, how can I help you?",
-    isBot: true,
-  },
-  {
     text: "Hi my name is Pepe",
     isBot: false,
   },
