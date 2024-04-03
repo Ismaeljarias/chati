@@ -18,11 +18,9 @@ type Props = {
 
 export const Chat = ({ messages }: Props) => {
   const [isPending, startTransition] = useTransition();
-  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const { userId } = useAuth();
-  const chatCookie = getCookie("chat");
 
   const [chatMessages, setChatMessages] = useState<
     { content: string; isBot: boolean }[]
@@ -41,15 +39,10 @@ export const Chat = ({ messages }: Props) => {
   ]);
 
   const handlePost = async (text: string) => {
-    if (!chatCookie) {
-      const chatSession = await createChatSession(userId!!);
-      setCookie("chat", chatSession.id);
-      router.refresh();
-    }
+    await createChatSession(userId!!);
 
     setChatMessages((prev) => [...prev, { content: text, isBot: false }]);
     const _tempChatSession = getCookie("chat") || "";
-
     await createMessage({
       content: text,
       clerkUserId: userId!!,
