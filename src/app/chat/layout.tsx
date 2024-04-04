@@ -21,7 +21,7 @@ export default async function ChatLayout({
 }>) {
   const { userId } = auth();
   const user = await currentUser();
-  const isAdmin = user?.emailAddresses[0].emailAddress === "admin@admin.com";
+  const isAdmin = user?.emailAddresses[0].emailAddress === "admin@admin.com"; // Yes it is hardcoded I know
 
   if (!userId) redirect("/sign-in");
 

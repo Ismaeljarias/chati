@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function ChatViewPage() {
   const user = await currentUser();
-  const isAdmin = user?.emailAddresses[0].emailAddress === "admin@admin.com";
+  const isAdmin = user?.emailAddresses[0].emailAddress === "admin@admin.com"; // Yes it is hardcoded I know
 
   if (!isAdmin) redirect("/chat");
 

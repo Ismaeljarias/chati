@@ -4,7 +4,7 @@ import { clerkClient } from "@clerk/nextjs";
 async function getClerkUsersInfo() {
   const userMetadata = await clerkClient.users.getUserList();
   return userMetadata
-    .filter((user) => user.emailAddresses[0].emailAddress !== "admin@admin.com")
+    .filter((user) => user.emailAddresses[0].emailAddress !== "admin@admin.com") // Yes it is hardcoded I know
     .map((user) => ({
       id: user.id,
       email: user.emailAddresses[0].emailAddress,

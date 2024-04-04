@@ -31,7 +31,7 @@ describe("Chat app", () => {
       failOnStatusCode: false,
     });
 
-    cy.get("#identifier-field").type("admin@admin.com");
+    cy.get("#identifier-field").type("admin@admin.com"); // Yes it is hardcoded I know
     cy.get('button[data-localization-key="formButtonPrimary"]').click();
     cy.get("#password-field").type("1234");
     cy.get('button[data-localization-key="formButtonPrimary"]').click();
