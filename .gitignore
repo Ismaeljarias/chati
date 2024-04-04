@@ -39,3 +39,5 @@ next-env.d.ts
 /blob-report/
 .idea/
 /postgres
+.env
+.env.local
