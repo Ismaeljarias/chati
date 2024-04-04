@@ -129,6 +129,6 @@ export async function getChatMessages(clerkUserId: string) {
     id: message.id,
     content: message.content,
     isBot: message.isBot,
-    createdAt: message.createdAt.toDateString(),
+    createdAt: message.createdAt,
   }));
 }

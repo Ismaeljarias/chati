@@ -8,7 +8,6 @@ import { auth } from "@clerk/nextjs";
 import React from "react";
 import { Chat } from "@/chat";
 import { getChatMessages } from "@/chat/actions/chat-actions";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {

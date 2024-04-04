@@ -18,7 +18,7 @@ export default function AdminChat() {
         id: string;
         content: string;
         isBot: boolean;
-        createdAt: string;
+        createdAt: Date;
       }[]
     | []
   >([]);
@@ -33,13 +33,19 @@ export default function AdminChat() {
     void fetchChatMessages();
   }, [params?.id]);
 
+  console.log(messages);
+
   return (
     <div className="chat-container">
       <div className="chat-messages">
         <div className="grid grid-cols-12 gap-y-2">
           {messages.map((message) =>
             message.isBot ? (
-              <Message key={message.id} text={message.content} />
+              <Message
+                key={message.id}
+                text={message.content}
+                time={timeAgo(message.createdAt)}
+              />
             ) : (
               <MyMessage
                 key={message.id}

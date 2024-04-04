@@ -6,7 +6,6 @@ import {
   createChatSession,
   createMessage,
   saveBotResponse,
-  sleep,
 } from "@/chat/actions/chat-actions";
 import { useUser } from "@clerk/nextjs";
 import { getCookie } from "cookies-next";
@@ -17,7 +16,7 @@ type Props = {
     id: string;
     content: string;
     isBot: boolean;
-    createdAt: string;
+    createdAt: Date;
   }[];
 };
 
@@ -31,7 +30,7 @@ export const Chat = ({ messages }: Props) => {
   >([]);
 
   const [optimisticMessages, addOptimisticMessage] = useOptimistic<
-    { id: string; content: string; isBot: boolean; createdAt: string }[],
+    { id: string; content: string; isBot: boolean; createdAt: Date }[],
     string
   >(messages, (state, newMessage) => [
     ...state,
@@ -39,7 +38,7 @@ export const Chat = ({ messages }: Props) => {
       id: `2a0a1396-04a3-4a31-9bdd-8e31eb68013${user?.id}`,
       content: newMessage,
       isBot: false,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(),
     },
   ]);
 
