@@ -12,7 +12,7 @@ export const Message = ({ text, time }: Props) => {
         <div className="flex items-center justify-center h-10 w-10 rounded-full bg-green-600 flex-shrink-0">
           Bot
         </div>
-        <div className="relative ml-3 text-sm bg-black bg-opacity-25 pt-3 px-4 pb-6 shadow rounded-xl">
+        <div className="relative min-w-[80px] ml-3 text-sm bg-black bg-opacity-25 pt-3 px-4 pb-6 shadow rounded-xl">
           <Markdown>{text}</Markdown>
           <small className="absolute bottom-1 right-2 text-[10px]">
             {time}

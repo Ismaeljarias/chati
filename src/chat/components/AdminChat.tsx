@@ -33,8 +33,6 @@ export default function AdminChat() {
     void fetchChatMessages();
   }, [params?.id]);
 
-  console.log(messages);
-
   return (
     <div className="chat-container">
       <div className="chat-messages">

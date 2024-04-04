@@ -16,8 +16,8 @@ export default async function ChatViewPage() {
   if (!isAdmin) redirect("/chat");
 
   return (
-    <div>
+    <>
       <AdminChat />
-    </div>
+    </>
   );
 }
