@@ -1,5 +1,8 @@
 import React from "react";
 import AdminChat from "@/chat/components/AdminChat";
+import { Metadata } from "next";
+import { currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Chat Admin User",
@@ -7,6 +10,11 @@ export const metadata: Metadata = {
 };
 
 export default async function ChatViewPage() {
+  const user = await currentUser();
+  const isAdmin = user?.emailAddresses[0].emailAddress === "admin@admin.com";
+
+  if (!isAdmin) redirect("/chat");
+
   return (
     <div>
       <AdminChat />
