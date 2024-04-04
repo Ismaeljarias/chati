@@ -27,6 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -39,5 +40,3 @@ next-env.d.ts
 /blob-report/
 .idea/
 /postgres
-.env
-.env.local
