@@ -1,7 +1,7 @@
-import { auth } from "@clerk/nextjs";
-
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+
+import { auth } from "@clerk/nextjs";
 
 import React from "react";
 import { Chat } from "@/chat";

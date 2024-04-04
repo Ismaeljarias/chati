@@ -27,7 +27,7 @@ export async function createChatSession(startedByClerkUserId: string) {
     },
   });
 
-  if (session?.id === chatCookie) {
+  if (session) {
     cookieStore.set("chat", session.id);
     return session.id;
   }

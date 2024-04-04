@@ -8,9 +8,9 @@ import {
   saveBotResponse,
   sleep,
 } from "@/chat/actions/chat-actions";
-import { useAuth } from "@clerk/nextjs";
-import { getCookie, setCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+import { getCookie } from "cookies-next";
+import { getFirstLetterOfEmail } from "@/utils";
 
 type Props = {
   messages: { id: string; content: string; isBot: boolean }[];
@@ -19,8 +19,7 @@ type Props = {
 export const Chat = ({ messages }: Props) => {
   const [isPending, startTransition] = useTransition();
 
-  const router = useRouter();
-  const { userId } = useAuth();
+  const { user } = useUser();
 
   const [chatMessages, setChatMessages] = useState<
     { content: string; isBot: boolean }[]
@@ -32,20 +31,30 @@ export const Chat = ({ messages }: Props) => {
   >(messages, (state, newMessage) => [
     ...state,
     {
-      id: `2a0a1396-04a3-4a31-9bdd-8e31eb68013${userId}`,
+      id: `2a0a1396-04a3-4a31-9bdd-8e31eb68013${user?.id}`,
       content: newMessage,
       isBot: false,
     },
   ]);
 
   const handlePost = async (text: string) => {
-    await createChatSession(userId!!);
+    await createChatSession(user?.id!!);
 
     setChatMessages((prev) => [...prev, { content: text, isBot: false }]);
     const _tempChatSession = getCookie("chat") || "";
+
+    if (messages.length === 0) {
+      await createMessage({
+        content: "Hola, I'm Goku, how can I help you?",
+        clerkUserId: user?.id!!,
+        sessionId: getCookie("chat") || "",
+        isBot: true,
+      });
+    }
+
     await createMessage({
       content: text,
-      clerkUserId: userId!!,
+      clerkUserId: user?.id!!,
       sessionId: _tempChatSession,
       isBot: false,
     });
@@ -68,13 +77,22 @@ export const Chat = ({ messages }: Props) => {
     <div className="chat-container">
       <div className="chat-messages">
         <div className="grid grid-cols-12 gap-y-2">
-          <Message text="Hola, I'm goku, how can I help you?" />
+          {messages.length === 0 && (
+            <Message text="Hola, I'm goku, how can I help you?" />
+          )}
 
           {optimisticMessages.map((message) =>
             message.isBot ? (
               <Message key={message.id} text={message.content} />
             ) : (
-              <MyMessage key={message.id} text={message.content} />
+              <MyMessage
+                key={message.id}
+                text={message.content}
+                email={
+                  getFirstLetterOfEmail(user?.emailAddresses[0].emailAddress) ||
+                  ""
+                }
+              />
             ),
           )}
 
