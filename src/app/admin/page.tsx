@@ -65,7 +65,7 @@ export default async function AdminPage() {
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-4 pr-4 text-right text-sm font-medium">
                         <Link
-                          href={`/chat/${user.id}`}
+                          href={`/chat/${user.id}?email=${user.email}`}
                           className="inline-flex items-center text-indigo-600 hover:text-indigo-900"
                         >
                           View Chat

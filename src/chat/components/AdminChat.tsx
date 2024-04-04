@@ -1,12 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+
 import { Message, MyMessage } from "@/components";
 import { getChatMessages } from "@/chat/actions/chat-actions";
+import { getFirstLetterOfEmail } from "@/utils";
 
 export default function AdminChat() {
-  const params = useParams<{ id: string; email: string }>();
+  const params = useParams<{ id: string }>();
+  const searchParams = useSearchParams();
+
+  const email = searchParams.get("email") || "";
+
   const [messages, setMessages] = useState<
     | {
         id: string;
@@ -34,7 +41,11 @@ export default function AdminChat() {
             message.isBot ? (
               <Message key={message.id} text={message.content} />
             ) : (
-              <MyMessage key={message.id} text={message.content} email={""} />
+              <MyMessage
+                key={message.id}
+                text={message.content}
+                email={getFirstLetterOfEmail(email) || ""}
+              />
             ),
           )}
         </div>
