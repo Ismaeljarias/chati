@@ -1,3 +1,5 @@
+import { Metadata } from "next";
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -73,6 +75,7 @@ export default async function AdminPage() {
                         <Link
                           href={`/chat/${user.id}?email=${user.email}`}
                           className="inline-flex items-center text-indigo-600 hover:text-indigo-900"
+                          data-testid={`chat-${user.email}`}
                         >
                           View Chat
                           <IoChevronDown className="ml-2 h-4 w-4" />

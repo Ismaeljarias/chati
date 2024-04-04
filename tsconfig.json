@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["cypress", "node"],
+    "types": ["cypress", "@testing-library/cypress", "node"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,

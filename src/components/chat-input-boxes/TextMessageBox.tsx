@@ -46,7 +46,11 @@ export const TextMessageBox = ({
       </div>
 
       <div className="ml-4">
-        <button className="btn-primary">
+        <button
+          type="submit"
+          className="btn-primary"
+          aria-label="Send Chat Message"
+        >
           <span className="mr-2">Send</span>
           <i className="fa-regular fa-paper-plane"></i>
         </button>

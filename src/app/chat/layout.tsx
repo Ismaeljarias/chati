@@ -10,6 +10,7 @@ const menuItems = [
     icon: <IoCalendarOutline />,
     title: "Chat",
     path: "/chat",
+    testId: "chat",
   },
 ];
 
@@ -51,6 +52,7 @@ export default async function ChatLayout({
                 icon={<IoLockClosed />}
                 title="Admin"
                 path="/admin"
+                testId="admin"
               />
             )}
           </div>
