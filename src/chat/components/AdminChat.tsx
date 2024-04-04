@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
 
 import { Message, MyMessage } from "@/components";
 import { getChatMessages } from "@/chat/actions/chat-actions";

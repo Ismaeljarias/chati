@@ -1,3 +1,5 @@
+import { Metadata } from "next";
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -8,6 +10,11 @@ import { Chat } from "@/chat";
 import { getChatMessages } from "@/chat/actions/chat-actions";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Chat Page",
+  description: "Chat with our bot",
+};
 
 export default async function ChatPage() {
   const { userId } = auth();

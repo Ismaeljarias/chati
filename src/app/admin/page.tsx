@@ -1,5 +1,3 @@
-import { currentUser } from "@clerk/nextjs";
-
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -8,6 +6,12 @@ import Link from "next/link";
 import { getAllUsers } from "@/admin/admin-actions";
 import { IoChevronDown } from "react-icons/io5";
 import { redirect } from "next/navigation";
+import { currentUser } from "@clerk/nextjs";
+
+export const metadata: Metadata = {
+  title: "Chat Admin Page",
+  description: "Chat with our bot",
+};
 
 export default async function AdminPage() {
   const user = await currentUser();
@@ -22,6 +26,7 @@ export default async function AdminPage() {
   if (users.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center gap-3 mt-5">
+        <h1 className="sr-only">Chat History</h1>
         <Link className="btn-primary" href={"/chat"}>
           Go back
         </Link>
@@ -31,7 +36,9 @@ export default async function AdminPage() {
   }
 
   return (
-    <div className="flex flex-col items-center m-5">
+    <main className="flex flex-col items-center m-5">
+      <h1 className="sr-only">Chat History</h1>
+
       <Link className="btn-primary" href={"/chat"}>
         Go back
       </Link>
@@ -80,6 +87,6 @@ export default async function AdminPage() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
