@@ -10,10 +10,15 @@ import {
 } from "@/chat/actions/chat-actions";
 import { useUser } from "@clerk/nextjs";
 import { getCookie } from "cookies-next";
-import { getFirstLetterOfEmail } from "@/utils";
+import { getFirstLetterOfEmail, timeAgo } from "@/utils";
 
 type Props = {
-  messages: { id: string; content: string; isBot: boolean }[];
+  messages: {
+    id: string;
+    content: string;
+    isBot: boolean;
+    createdAt: string;
+  }[];
 };
 
 export const Chat = ({ messages }: Props) => {
@@ -26,7 +31,7 @@ export const Chat = ({ messages }: Props) => {
   >([]);
 
   const [optimisticMessages, addOptimisticMessage] = useOptimistic<
-    { id: string; content: string; isBot: boolean }[],
+    { id: string; content: string; isBot: boolean; createdAt: string }[],
     string
   >(messages, (state, newMessage) => [
     ...state,
@@ -34,6 +39,7 @@ export const Chat = ({ messages }: Props) => {
       id: `2a0a1396-04a3-4a31-9bdd-8e31eb68013${user?.id}`,
       content: newMessage,
       isBot: false,
+      createdAt: new Date().toISOString(),
     },
   ]);
 
@@ -78,12 +84,19 @@ export const Chat = ({ messages }: Props) => {
       <div className="chat-messages">
         <div className="grid grid-cols-12 gap-y-2">
           {messages.length === 0 && (
-            <Message text="Hola, I'm goku, how can I help you?" />
+            <Message
+              text="Hola, I'm goku, how can I help you?"
+              time={timeAgo(new Date().toISOString())}
+            />
           )}
 
           {optimisticMessages.map((message) =>
             message.isBot ? (
-              <Message key={message.id} text={message.content} />
+              <Message
+                key={message.id}
+                text={message.content}
+                time={timeAgo(message.createdAt)}
+              />
             ) : (
               <MyMessage
                 key={message.id}
@@ -92,6 +105,7 @@ export const Chat = ({ messages }: Props) => {
                   getFirstLetterOfEmail(user?.emailAddresses[0].emailAddress) ||
                   ""
                 }
+                time={timeAgo(message.createdAt)}
               />
             ),
           )}
@@ -107,7 +121,6 @@ export const Chat = ({ messages }: Props) => {
       <TextMessageBox
         onSendMessage={onHandlePost}
         placeholder="Start typing..."
-        disableCorrections
       />
     </div>
   );

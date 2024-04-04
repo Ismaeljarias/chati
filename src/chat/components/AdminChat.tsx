@@ -5,7 +5,7 @@ import { useParams, useSearchParams } from "next/navigation";
 
 import { Message, MyMessage } from "@/components";
 import { getChatMessages } from "@/chat/actions/chat-actions";
-import { getFirstLetterOfEmail } from "@/utils";
+import { getFirstLetterOfEmail, timeAgo } from "@/utils";
 
 export default function AdminChat() {
   const params = useParams<{ id: string }>();
@@ -18,6 +18,7 @@ export default function AdminChat() {
         id: string;
         content: string;
         isBot: boolean;
+        createdAt: string;
       }[]
     | []
   >([]);
@@ -44,6 +45,7 @@ export default function AdminChat() {
                 key={message.id}
                 text={message.content}
                 email={getFirstLetterOfEmail(email) || ""}
+                time={timeAgo(message.createdAt)}
               />
             ),
           )}
