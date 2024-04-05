@@ -7,8 +7,19 @@ We need to setup the .env file and .env.local file you can check the .example
 
 First you need docker to be installed and running then you can run the following command to start the database:
 
-```bash
-docker-compose up -d
+1. Start the docker-compose
+```
+docker compose up -d
+```
+
+2. Rename the .env.example to .env
+3. Replace the values of the .env file with the values of the .env.example file
+
+# Prisma commnads
+```
+npx prisma init
+npx prisma migrate dev
+npx prisma generate
 ```
 
 Then you need to install the dependencies:
@@ -35,3 +46,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Important
 For the login/sign-up stuff I'm using a service [CLERK](https://clerk.com/)
+
+If you need the Clerk credentials to test just let me know, I can provide it and only works in Development mode.
